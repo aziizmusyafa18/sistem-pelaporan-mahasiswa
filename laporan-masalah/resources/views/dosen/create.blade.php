@@ -13,7 +13,7 @@
   </div>
 @endif
 
-<form action="{{ route('mahasiswa.store') }}" method="POST" class="bg-white p-4 rounded shadow max-w-xl">
+<form action="{{ route('dosen.store') }}" method="POST" class="bg-white p-4 rounded shadow max-w-xl">
   @csrf
   <div class="mb-3">
     <label class="block mb-1">Nama</label>
@@ -32,7 +32,7 @@
 
   <div class="flex items-center gap-2">
     <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Simpan</button>
-    <a href="{{ route('mahasiswa.index') }}" class="px-4 py-2 rounded border hover:bg-gray-50">Batal</a>
+    <a href="{{ route('dosen.index') }}" class="px-4 py-2 rounded border hover:bg-gray-50">Batal</a>
   </div>
 </form>
 @endsection

@@ -17,7 +17,7 @@
   @csrf
   <div class="mb-3">
     <label class="block mb-1">Nama</label>
-    <input type="text" name="nama"  class="w-full border rounded px-3 py-2" required>
+    <input type="text" name="nama" value="{{ old('nama') }}" class="w-full border rounded px-3 py-2" required>
   </div>
 
   <div class="mb-3">

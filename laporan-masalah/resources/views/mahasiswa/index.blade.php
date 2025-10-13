@@ -6,6 +6,15 @@
   <a href="{{ route('mahasiswa.create') }}" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">+ Tambah Mahasiswa</a>
 </div>
 
+<div class="mb-4">
+  <form action="{{ route('mahasiswa.index') }}" method="GET">
+    <div class="flex">
+      <input type="text" name="search" class="w-full border rounded-l px-3 py-2" placeholder="Cari berdasarkan nama atau NIM..." value="{{ $search ?? '' }}">
+      <button type="submit" class="px-4 py-2 rounded-r bg-gray-600 text-white hover:bg-gray-700">Cari</button>
+    </div>
+  </form>
+</div>
+
 <x-alert-success />
 
 <table class="w-full border-collapse bg-white rounded shadow">
@@ -35,12 +44,12 @@
         </td>
       </tr>
     @empty
-      <tr><td colspan="5" class="px-4 py-6 border text-center text-gray-500">Belum ada data</td></tr>
+      <tr><td colspan="5" class="px-4 py-6 border text-center text-gray-500">Belum ada data atau data tidak ditemukan</td></tr>
     @endforelse
   </tbody>
 </table>
 
 <div class="mt-4">
-  {{ $mahasiswas->links() }}
+  {{ $mahasiswas->appends(request()->query())->links() }}
 </div>
 @endsection

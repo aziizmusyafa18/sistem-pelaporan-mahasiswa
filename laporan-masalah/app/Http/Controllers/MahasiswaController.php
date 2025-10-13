@@ -12,8 +12,17 @@ class MahasiswaController extends Controller
      */
     public function index()
     {
-        $mahasiswas = \App\Models\Mahasiswa::orderBy('nama')->paginate(10);
-    return view('mahasiswa.index', compact('mahasiswas'));
+        $search = request()->input('search');
+
+        $mahasiswas = \App\Models\Mahasiswa::query()
+            ->when($search, function ($query, $search) {
+                return $query->where('nama', 'like', "%{$search}%")
+                             ->orWhere('nim', 'like', "%{$search}%");
+            })
+            ->orderBy('nama')
+            ->paginate(10);
+
+        return view('mahasiswa.index', compact('mahasiswas', 'search'));
     }
 
     /**
@@ -27,10 +36,8 @@ class MahasiswaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(\illuminate\Http\Request $request)
+    public function store(\Illuminate\Http\Request $request)
     {
-dd($request->all());
-
         $validated = $request->validate([
         'nama' => ['required','string','max:100'],
         'nim'  => ['required','string','max:20','unique:mahasiswas,nim'],
