@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<h2 class="text-xl font-semibold mb-4">Tambah Mahasiswa</h2>
+<h2 class="text-xl font-semibold mb-4">Tambah Dosen</h2>
 
 @if ($errors->any())
   <div class="mb-4 rounded border border-red-200 bg-red-50 p-3 text-red-700">
@@ -17,12 +17,12 @@
   @csrf
   <div class="mb-3">
     <label class="block mb-1">Nama</label>
-    <input type="text" name="nama"  class="w-full border rounded px-3 py-2" required>
+    <input type="text" name="nama" value="{{ old('nama') }}" class="w-full border rounded px-3 py-2" required>
   </div>
 
   <div class="mb-3">
-    <label class="block mb-1">NIM</label>
-    <input type="text" name="nim" value="{{ old('nim') }}" class="w-full border rounded px-3 py-2" required>
+    <label class="block mb-1">NIDN</label>
+    <input type="text" name="nidn" value="{{ old('nidn') }}" class="w-full border rounded px-3 py-2" required>
   </div>
 
   <div class="mb-4">

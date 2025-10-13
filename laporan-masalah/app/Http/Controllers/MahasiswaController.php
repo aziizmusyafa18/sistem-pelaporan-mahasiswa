@@ -29,7 +29,17 @@ class MahasiswaController extends Controller
      */
     public function store(\illuminate\Http\Request $request)
     {
-        //
+dd($request->all());
+
+        $validated = $request->validate([
+        'nama' => ['required','string','max:100'],
+        'nim'  => ['required','string','max:20','unique:mahasiswas,nim'],
+        'email'=> ['required','email','max:100','unique:mahasiswas,email'],
+    ]);
+
+    \App\Models\Mahasiswa::create($validated);
+
+    return redirect()->route('mahasiswa.index')->with('success','Data mahasiswa berhasil ditambahkan.');
     }
 
     /**
