@@ -10,7 +10,7 @@ class DosenController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
         $dosens = \App\Models\Dosen::orderBy('nama')->paginate(10);
         return view('dosen.index', compact('dosens'));
