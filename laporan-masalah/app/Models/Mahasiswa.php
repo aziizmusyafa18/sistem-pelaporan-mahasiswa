@@ -17,4 +17,9 @@ class Mahasiswa extends Model
     {
         return $this->hasMany(Laporan::class);
     }
+
+    public function user()
+    {
+        return $this->hasOne(User::class);
+    }
 }

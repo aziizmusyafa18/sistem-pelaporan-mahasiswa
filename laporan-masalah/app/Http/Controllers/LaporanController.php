@@ -9,31 +9,45 @@ use Illuminate\Support\Str;
 
 class LaporanController extends Controller
 {
+    public function index(Request $request)
+    {
+        $user = auth()->user();
+        if ($user->role === 'dpa') {
+            // DPA sees all reports, ordered by latest
+            $laporans = Laporan::with('mahasiswa')->latest()->paginate(10);
+        } else {
+            // Mahasiswa sees only their own reports
+            $laporans = Laporan::where('mahasiswa_id', $user->mahasiswa_id)->latest()->paginate(10);
+        }
+
+        return view('laporan.index', compact('laporans'));
+    }
 
     public function create()
     {
-        // Sementara pilih mahasiswa dari dropdown (sebelum Auth)
-        $mahasiswas = Mahasiswa::orderBy('nama')->get();
-        return view('laporan.create', compact('mahasiswas'));
+        return view('laporan.create');
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
-            'judul' => ['required','string','max:150'],
-            'deskripsi' => ['required','string','max:2000'],
-            'mahasiswa_id' => ['required','exists:mahasiswas,id'],
-        ]);
+        if (!auth()->user()->mahasiswa_id) {
+            return back()->withErrors(['akun' => 'Akun Anda tidak terhubung dengan data mahasiswa manapun. Silakan hubungi admin.'])->withInput();
+        }
 
-        $nomorLaporan = $this->generateNomorLaporan();
+         $validated = $request->validate([
+        'judul' => ['required','string','max:150'],
+        'deskripsi' => ['required','string','max:2000'],
+    ]);
 
-        $laporan = Laporan::create([
-            'judul' => $validated['judul'],
-            'deskripsi' => $validated['deskripsi'],
-            'nomor_laporan' => $nomorLaporan,
-            'status' => 'baru',
-            'mahasiswa_id' => $validated['mahasiswa_id'],
-        ]);
+    $nomorLaporan = $this->generateNomorLaporan();
+
+    $laporan = \App\Models\Laporan::create([
+        'judul' => $validated['judul'],
+        'deskripsi' => $validated['deskripsi'],
+        'nomor_laporan' => $nomorLaporan,
+        'status' => 'baru',
+        'mahasiswa_id' => auth()->user()->mahasiswa_id, // otomatis ambil user login
+    ]);
 
         return redirect()->route('laporan.show', $laporan)
             ->with('success','Laporan berhasil dibuat dengan nomor tiket: '.$nomorLaporan);
@@ -59,16 +73,30 @@ class LaporanController extends Controller
 
     public function update(Request $request, Laporan $laporan)
     {
+        // Authorize that the logged in user is the owner of the report
+        if ($laporan->mahasiswa_id !== auth()->user()->mahasiswa_id) {
+            abort(403);
+        }
+
         $validated = $request->validate([
             'judul' => ['required','string','max:150'],
             'deskripsi' => ['required','string','max:2000'],
-            'mahasiswa_id' => ['required','exists:mahasiswas,id'],
-            'status' => ['required','in:baru,diproses,selesai'],
         ]);
 
         $laporan->update($validated);
 
         return redirect()->route('laporan.show', $laporan)->with('success','Laporan berhasil diperbarui.');
+    }
+
+    public function updateStatus(Request $request, Laporan $laporan)
+    {
+        $validated = $request->validate([
+            'status' => ['required','in:baru,diproses,selesai'],
+        ]);
+
+        $laporan->update($validated);
+
+        return redirect()->route('laporan.show', $laporan)->with('success','Status laporan berhasil diperbarui.');
     }
 
     public function destroy(Laporan $laporan)
