@@ -5,8 +5,8 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="{{ route('dashboard') }}" class="flex items-center">
+                        <img src="{{ asset('img/logosipma.png') }}" alt="SIPMA Logo" class="block h-14 w-auto">
                     </a>
                 </div>
 
@@ -15,6 +15,46 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+
+                    {{-- Mahasiswa Links --}}
+                    @if(auth()->user()->role === 'mahasiswa')
+                    <x-nav-link :href="route('laporan.index')" :active="request()->routeIs('laporan.index')">
+                        {{ __('Laporan') }}
+                    </x-nav-link>
+                    @endif
+
+                    {{-- DPA/Admin Links --}}
+                    @if(auth()->user()->role === 'dpa')
+                        <x-nav-link :href="route('admin.laporan.index')" :active="request()->routeIs('admin.laporan.index')">
+                            {{ __('Laporan') }}
+                        </x-nav-link>
+
+                        <!-- Database Dropdown -->
+                        <div class="hidden sm:flex sm:items-center">
+                            <x-dropdown align="left" width="48">
+                                <x-slot name="trigger">
+                                    <button class="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                        <div>Database</div>
+
+                                        <div class="ms-1">
+                                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                            </svg>
+                                        </div>
+                                    </button>
+                                </x-slot>
+
+                                <x-slot name="content">
+                                    <x-dropdown-link :href="route('dosen.index')">
+                                        {{ __('Dosen') }}
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('mahasiswa.index')">
+                                        {{ __('Mahasiswa') }}
+                                    </x-dropdown-link>
+                                </x-slot>
+                            </x-dropdown>
+                        </div>
+                    @endif
                 </div>
             </div>
 

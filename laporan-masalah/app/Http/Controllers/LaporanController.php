@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Laporan;
 use App\Models\Mahasiswa;
+use App\Models\StatusHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -73,6 +74,7 @@ class LaporanController extends Controller
 
     public function update(Request $request, Laporan $laporan)
     {
+
         // Authorize that the logged in user is the owner of the report
         if ($laporan->mahasiswa_id !== auth()->user()->mahasiswa_id) {
             abort(403);
@@ -94,14 +96,36 @@ class LaporanController extends Controller
             'status' => ['required','in:baru,diproses,selesai'],
         ]);
 
-        $laporan->update($validated);
+        $laporan->update([
+            'status' => $validated['status'],
+            'tanggal_update_status_terakhir' => now(),
+        ]);
 
-        return redirect()->route('laporan.show', $laporan)->with('success','Status laporan berhasil diperbarui.');
+        \App\Models\StatusHistory::create([
+            'laporan_id' => $laporan->id,
+            'status' => $validated['status'],
+        ]);
+
+        return redirect()->back()->with('success','Laporan berhasil diselesaikan.');
     }
 
     public function destroy(Laporan $laporan)
     {
-        $laporan->delete();
-        return redirect()->route('laporan.index')->with('success','Laporan berhasil dihapus.');
+        $user = auth()->user();
+
+        // DPA can delete any report
+        if ($user->role === 'dpa') {
+            $laporan->delete();
+            return redirect()->route('admin.laporan.index')->with('success','Laporan berhasil dihapus.');
+        }
+
+        // Mahasiswa can only delete their own report
+        if ($user->role === 'mahasiswa' && $laporan->mahasiswa_id === $user->mahasiswa_id) {
+            $laporan->delete();
+            return redirect()->route('laporan.index')->with('success','Laporan berhasil dihapus.');
+        }
+
+        // If neither condition is met, abort with 403
+        abort(403);
     }
 }
