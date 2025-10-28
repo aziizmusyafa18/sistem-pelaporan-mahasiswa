@@ -50,14 +50,26 @@ class RegisteredUserController extends Controller
         $dosen_id = null;
 
         if ($request->role === 'mahasiswa') {
+            // Generate new ID for mahasiswa
+            $lastMahasiswa = Mahasiswa::orderBy('id', 'desc')->first();
+            $nextIdNumber = $lastMahasiswa ? (int)substr($lastMahasiswa->id, 1) + 1 : 1;
+            $mahasiswaId = 'M' . str_pad($nextIdNumber, 3, '0', STR_PAD_LEFT);
+
             $mahasiswa = Mahasiswa::create([
+                'id' => $mahasiswaId,
                 'nama' => $request->name,
                 'nim' => $request->nim,
                 'email' => $request->email,
             ]);
             $mahasiswa_id = $mahasiswa->id;
         } elseif ($request->role === 'dpa') {
+            // Generate new ID for dosen
+            $lastDosen = Dosen::orderBy('id', 'desc')->first();
+            $nextIdNumber = $lastDosen ? (int)substr($lastDosen->id, 1) + 1 : 1;
+            $dosenId = 'D' . str_pad($nextIdNumber, 3, '0', STR_PAD_LEFT);
+
             $dosen = Dosen::create([
+                'id' => $dosenId,
                 'nama' => $request->name,
                 'nidn' => $request->nidn,
                 'email' => $request->email,

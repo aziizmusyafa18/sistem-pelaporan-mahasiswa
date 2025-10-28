@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Mahasiswa;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 
 class MahasiswaSeeder extends Seeder
 {
@@ -13,6 +14,10 @@ class MahasiswaSeeder extends Seeder
      */
     public function run(): void
     {
+        Schema::disableForeignKeyConstraints();
+        Mahasiswa::truncate();
+        Schema::enableForeignKeyConstraints();
+
         $mahasiswas = [
             ['nama' => 'Budi Santoso', 'nim' => '1234567890', 'email' => 'budi.santoso@example.com'],
             ['nama' => 'Ani Yudhoyono', 'nim' => '1234567891', 'email' => 'ani.yudhoyono@example.com'],
@@ -26,8 +31,9 @@ class MahasiswaSeeder extends Seeder
             ['nama' => 'Joko Widodo', 'nim' => '1234567899', 'email' => 'joko.widodo@example.com'],
         ];
 
-        foreach ($mahasiswas as $mahasiswa) {
-            Mahasiswa::create($mahasiswa);
+        foreach ($mahasiswas as $index => $mahasiswa) {
+            $mahasiswaId = 'M' . str_pad($index + 1, 3, '0', STR_PAD_LEFT);
+            Mahasiswa::create(array_merge($mahasiswa, ['id' => $mahasiswaId]));
         }
     }
 }

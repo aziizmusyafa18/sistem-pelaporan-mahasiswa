@@ -17,11 +17,20 @@ class DatabaseSeeder extends Seeder
             MahasiswaSeeder::class,
         ]);
 
-        // User::factory(10)->create();
-
+        $mahasiswa = \App\Models\Mahasiswa::factory()->create();
         User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+            'name' => $mahasiswa->nama,
+            'email' => $mahasiswa->email,
+            'role' => 'mahasiswa',
+            'mahasiswa_id' => $mahasiswa->id,
+        ]);
+
+        $dosen = \App\Models\Dosen::factory()->create();
+        User::factory()->create([
+            'name' => $dosen->nama,
+            'email' => $dosen->email,
+            'role' => 'dpa',
+            'dosen_id' => $dosen->id,
         ]);
     }
 }

@@ -28,8 +28,8 @@
 
                     <table class="w-full border-collapse bg-white rounded shadow">
                         <thead>
-                            <tr class="bg-gray-100 text-left">
-                            <th class="px-4 py-2 border">#</th>
+                            <tr class="bg-blue-900 text-center text-white">
+                            <th class="px-4 py-2 border">ID</th>
                             <th class="px-4 py-2 border">Nama</th>
                             <th class="px-4 py-2 border">NIM</th>
                             <th class="px-4 py-2 border">Email</th>
@@ -38,18 +38,26 @@
                         </thead>
                         <tbody>
                             @forelse ($mahasiswas as $index => $mahasiswa)
-                            <tr>
-                                <td class="px-4 py-2 border">{{ $mahasiswas->firstItem() + $index }}</td>
+                            <tr class="text-center">
+                                <td class="px-4 py-2 border">{{ $mahasiswa->id }}</td>
                                 <td class="px-4 py-2 border">{{ $mahasiswa->nama }}</td>
                                 <td class="px-4 py-2 border">{{ $mahasiswa->nim }}</td>
                                 <td class="px-4 py-2 border">{{ $mahasiswa->email }}</td>
                                 <td class="px-4 py-2 border">
-                                <a href="{{ route('mahasiswa.show', $mahasiswa) }}" class="text-blue-700 hover:underline">Lihat</a>
-                                <a href="{{ route('mahasiswa.edit', $mahasiswa) }}" class="ml-3 text-yellow-600 hover:underline">Edit</a>
-                                <form action="{{ route('mahasiswa.destroy', $mahasiswa) }}" method="POST" class="inline-block ml-3" onsubmit="return confirm('Yakin hapus data?')">
-                                    @csrf @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:underline">Hapus</button>
-                                </form>
+                                    <div class="flex items-center justify-center">
+                                        <a href="{{ route('mahasiswa.show', $mahasiswa) }}" class="text-blue-700 hover:underline">
+                                            <i class="fa-solid fa-eye"></i>
+                                        </a>
+                                        <a href="{{ route('mahasiswa.edit', $mahasiswa) }}" class="ml-3 text-yellow-600 hover:underline">
+                                            <i class="fa-solid fa-pen-to-square"></i>
+                                        </a>
+                                        <form action="{{ route('mahasiswa.destroy', $mahasiswa) }}" method="POST" class="inline-block ml-3" onsubmit="return confirm('Yakin hapus data?')">
+                                            @csrf @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:underline">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
                                 </td>
                             </tr>
                             @empty

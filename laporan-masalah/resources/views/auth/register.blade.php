@@ -68,11 +68,11 @@
 
                 <div class="mt-4">
 
-                    <x-input-label for="role" value="Role" />
+                    <x-input-label for="role" value="Status"/>
 
                     <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
 
-                        <option selected disabled>Login sebagai</option>
+                        <option selected disabled>Pilih Status</option>
                         <option value="mahasiswa">Mahasiswa</option>
 
                         <option value="dpa">DPA</option>

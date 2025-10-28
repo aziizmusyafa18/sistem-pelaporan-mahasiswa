@@ -9,5 +9,8 @@ class Dosen extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nama','nidn','email'];
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $fillable = ['id', 'nama','nidn','email'];
 }

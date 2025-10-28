@@ -17,7 +17,8 @@ return new class extends Migration
             $table->text('deskripsi');
             $table->string('nomor_laporan')->unique();
             $table->enum('status',['baru','diproses','selesai'])->default('baru');
-            $table->foreignId('mahasiswa_id')->constrained();
+            $table->string('mahasiswa_id');
+            $table->foreign('mahasiswa_id')->references('id')->on('mahasiswas');
             $table->timestamps();
         });
     }

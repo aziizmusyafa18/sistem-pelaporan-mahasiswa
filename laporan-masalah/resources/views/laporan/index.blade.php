@@ -28,7 +28,7 @@
                     </form>
                     <table class="w-full border-collapse bg-white rounded shadow">
                       <thead>
-                        <tr class="bg-gray-100 text-left">
+                        <tr class="bg-blue-900 text-center text-white">
                           <th class="px-4 py-2 border">#</th>
                           <th class="px-4 py-2 border">Nomor</th>
                           <th class="px-4 py-2 border">Judul</th>
