@@ -1,0 +1,14 @@
+.gsap-animate-heading {
+    opacity: 0;
+    transform: translateX(-100px);
+}
+
+.gsap-animate-buttons {
+    opacity: 0;
+    transform: translateY(100px);
+}
+
+.gsap-animate-image {
+    opacity: 0;
+    transform: translateX(100px);
+}

@@ -36,19 +36,19 @@
                         </thead>
                         <tbody>
                             @forelse ($laporans as $laporan)
-                            <tr>
+                            <tr class="text-center">
                                 <td class="px-4 py-2 border font-mono">{{ $laporan->nomor_laporan }}</td>
                                 <td class="px-4 py-2 border">{{ $laporan->judul }}</td>
                                 <td class="px-4 py-2 border">{{ optional($laporan->mahasiswa)->nama }}</td>
                                 <td class="px-4 py-2 border">{{ ucfirst($laporan->status) }}</td>
                                 <td class="px-4 py-2 border">{{ $laporan->tanggal_update_status_terakhir ? \Carbon\Carbon::parse($laporan->tanggal_update_status_terakhir)->isoFormat('D MMMM YYYY, HH:mm') : '-' }}</td>
                                 <td class="px-4 py-2 border whitespace-nowrap">
-                                    <div class="flex items-center gap-2">
+                                    <div class="flex items-center gap-2 text-center justify-center">
                                         {{-- Lihat Button --}}
                                         @can('isDPA')
-                                            <a href="{{ route('admin.laporan.show', $laporan) }}" class="px-2 py-1 border border-blue-500 text-blue-600 rounded-md text-sm hover:bg-blue-50">Lihat</a>
+                                            <a href="{{ route('admin.laporan.show', $laporan) }}" class="px-2 py-1 border border-blue-500 text-blue-600 rounded-md text-sm hover:bg-blue-50"><i class="bi bi-eye"></i></a>
                                         @else
-                                            <a href="{{ route('laporan.show', $laporan) }}" class="px-2 py-1 border border-blue-500 text-blue-600 rounded-md text-sm hover:bg-blue-50">Lihat</a>
+                                            <a href="{{ route('laporan.show', $laporan) }}" class="px-2 py-1 border border-blue-500 text-blue-600 rounded-md text-sm hover:bg-blue-50"><i class="bi bi-eye"></i></a>
                                         @endcan
 
                                         {{-- Quick Status Change Button for DPA --}}
@@ -59,7 +59,11 @@
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="{{ $laporan->status === 'baru' ? 'diproses' : 'selesai' }}">
                                                 <button type="submit" class="px-2 py-1 border border-green-500 text-green-600 rounded-md text-sm hover:bg-green-50">
-                                                    {{ $laporan->status === 'baru' ? 'Proses' : 'Selesaikan' }}
+                                                    @if($laporan->status === 'baru')
+                                                        <i class="bi bi-arrow-repeat"></i>
+                                                    @else
+                                                        <i class="bi bi-check-lg"></i>
+                                                    @endif
                                                 </button>
                                             </form>
                                             @endif
@@ -69,7 +73,7 @@
                                         <form action="{{ auth()->user()->role === 'dpa' ? route('admin.laporan.destroy', $laporan) : route('laporan.destroy', $laporan) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus laporan?')">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="px-2 py-1 border border-red-500 text-red-600 rounded-md text-sm hover:bg-red-50">Hapus</button>
+                                            <button type="submit" class="px-2 py-1 border border-red-500 text-red-600 rounded-md text-sm hover:bg-red-50"><i class="bi bi-trash"></i></button>
                                         </form>
                                     </div>
                                 </td>

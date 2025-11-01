@@ -29,8 +29,8 @@
                     <table class="w-full border-collapse bg-white rounded shadow">
                       <thead>
                         <tr class="bg-blue-900 text-center text-white">
-                          <th class="px-4 py-2 border">#</th>
-                          <th class="px-4 py-2 border">Nomor</th>
+                          <th class="px-4 py-2 border">No</th>
+                          <th class="px-4 py-2 border">Nomor Tiket</th>
                           <th class="px-4 py-2 border">Judul</th>
                           <th class="px-4 py-2 border">Pelapor</th>
                           <th class="px-4 py-2 border">Status</th>
@@ -38,7 +38,7 @@
                           <th class="px-4 py-2 border">Aksi</th>
                         </tr>
                       </thead>
-                      <tbody>
+                      <tbody class="text-center">
                         @forelse ($laporans as $index => $laporan)
                           <tr>
                             <td class="px-4 py-2 border">{{ $laporans->firstItem() + $index }}</td>
@@ -53,11 +53,11 @@
                             </td>
                             <td class="px-4 py-2 border">{{ $laporan->tanggal_update_status_terakhir ? \Carbon\Carbon::parse($laporan->tanggal_update_status_terakhir)->isoFormat('D MMMM YYYY, HH:mm') : '-' }}</td>
                             <td class="px-4 py-2 border whitespace-nowrap">
-                              <div class="flex items-center gap-2">
-                                <a href="{{ route('laporan.show', $laporan) }}" class="px-2 py-1 border border-blue-500 text-blue-600 rounded-md text-sm hover:bg-blue-50">Lihat</a>
+                              <div class="flex items-center justify-center gap-2">
+                                <a href="{{ route('laporan.show', $laporan) }}" class="px-2 py-1 border border-blue-500 text-blue-600 rounded-md text-sm hover:bg-blue-50"><i class="bi bi-eye"></i></a>
                                 
                                 @cannot('isDPA')
-                                <a href="{{ route('laporan.edit', $laporan) }}" class="px-2 py-1 border border-yellow-500 text-yellow-600 rounded-md text-sm hover:bg-yellow-50">Edit</a>
+                                <a href="{{ route('laporan.edit', $laporan) }}" class="px-2 py-1 border border-yellow-500 text-yellow-600 rounded-md text-sm hover:bg-yellow-50"><i class="bi bi-pencil-square"></i></a>
                                 @endcannot
                                 
                                 <!-- Tombol Ubah Status Cepat -->
@@ -76,7 +76,7 @@
                                 <!-- Hapus -->
                                 <form action="{{ route('laporan.destroy', $laporan) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus laporan?')">
                                   @csrf @method('DELETE')
-                                  <button type="submit" class="px-2 py-1 border border-red-500 text-red-600 rounded-md text-sm hover:bg-red-50">Hapus</button>
+                                  <button type="submit" class="px-2 py-1 border border-red-500 text-red-600 rounded-md text-sm hover:bg-red-50"><i class="bi bi-trash"></i></button>
                                 </form>
                               </div>
                             </td>
