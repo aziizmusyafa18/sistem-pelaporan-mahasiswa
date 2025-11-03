@@ -35,7 +35,7 @@
                             <td class="px-4 py-2 border">{{ $dosen->nidn }}</td>
                             <td class="px-4 py-2 border">{{ $dosen->email }}</td>
                             <td class="px-4 py-2 border">
-                                <div class="flex items-center justify-center p-4">
+                                <div class="flex items-center justify-center p-2">
                                     <a href="{{ route('dosen.show', $dosen) }}" class="text-blue-700 hover:underline">
                                         <i class="bi bi-eye"></i>
                                     </a>
