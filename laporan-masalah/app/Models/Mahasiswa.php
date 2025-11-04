@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Laporan ;
+use Illuminate\Support\Str;
 
 
 class Mahasiswa extends Model
@@ -14,7 +15,7 @@ class Mahasiswa extends Model
     public $incrementing = false;
     protected $keyType = 'string';
 
-    protected $fillable = ['id', 'nama','nim','email'];
+    protected $fillable = ['id', 'nama','nim','email', 'user_id'];
 
     public function laporans()
     {
@@ -23,6 +24,6 @@ class Mahasiswa extends Model
 
     public function user()
     {
-        return $this->hasOne(User::class);
+        return $this->belongsTo(User::class);
     }
 }

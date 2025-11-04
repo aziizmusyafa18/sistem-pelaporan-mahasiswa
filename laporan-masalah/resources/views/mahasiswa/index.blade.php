@@ -44,7 +44,7 @@
                                 <td class="px-4 py-2 border">{{ $mahasiswa->nim }}</td>
                                 <td class="px-4 py-2 border">{{ $mahasiswa->email }}</td>
                                 <td class="px-4 py-2 border">
-                                    <div class="flex items-center justify-center p-2">
+                                    <div class="flex items-center justify-center p-1">
                                         <a href="{{ route('mahasiswa.show', $mahasiswa) }}" class="text-blue-700 hover:underline">
                                             <i class="bi bi-eye" style="font-size: 25px;"></i>
                                         </a>
