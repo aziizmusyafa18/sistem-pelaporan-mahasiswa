@@ -24,17 +24,6 @@
                       @csrf @method('PUT')
 
                       <div class="mb-3">
-                        <label class="block mb-1">Mahasiswa (Pelapor)</label>
-                        <select name="mahasiswa_id" class="w-full border rounded px-3 py-2" required>
-                          @foreach ($mahasiswas as $mhs)
-                            <option value="{{ $mhs->id }}" {{ old('mahasiswa_id', $laporan->mahasiswa_id) == $mhs->id ? 'selected' : '' }}>
-                              {{ $mhs->nama }} ({{ $mhs->nim }})
-                            </option>
-                          @endforeach
-                        </select>
-                      </div>
-
-                      <div class="mb-3">
                         <label class="block mb-1">Judul Laporan</label>
                         <input type="text" name="judul" value="{{ old('judul', $laporan->judul) }}" class="w-full border rounded px-3 py-2" required>
                       </div>
@@ -42,15 +31,6 @@
                       <div class="mb-3">
                         <label class="block mb-1">Deskripsi</label>
                         <textarea name="deskripsi" rows="5" class="w-full border rounded px-3 py-2" required>{{ old('deskripsi', $laporan->deskripsi) }}</textarea>
-                      </div>
-
-                      <div class="mb-4">
-                        <label class="block mb-1">Status</label>
-                        <select name="status" class="w-full border rounded px-3 py-2" required>
-                          @foreach (['baru','diproses','selesai'] as $st)
-                            <option value="{{ $st }}" {{ old('status', $laporan->status) == $st ? 'selected' : '' }}>{{ ucfirst($st) }}</option>
-                          @endforeach
-                        </select>
                       </div>
 
                       <div class="flex items-center gap-2">

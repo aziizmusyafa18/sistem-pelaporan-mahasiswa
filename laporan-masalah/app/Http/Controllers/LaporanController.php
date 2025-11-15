@@ -68,8 +68,7 @@ class LaporanController extends Controller
 
     public function edit(Laporan $laporan)
     {
-        $mahasiswas = Mahasiswa::orderBy('nama')->get();
-        return view('laporan.edit', compact('laporan','mahasiswas'));
+        return view('laporan.edit', compact('laporan'));
     }
 
     public function update(Request $request, Laporan $laporan)

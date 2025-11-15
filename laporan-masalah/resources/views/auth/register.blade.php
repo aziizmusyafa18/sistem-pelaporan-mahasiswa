@@ -66,23 +66,6 @@
 
                 <!-- Role -->
 
-                <div class="mt-4">
-
-                    <x-input-label for="role" value="Status"/>
-
-                    <select id="role" name="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
-
-                        <option selected disabled>Pilih Status</option>
-                        <option value="mahasiswa">Mahasiswa</option>
-
-                        <option value="dpa">DPA</option>
-
-                    </select>
-
-                    <x-input-error :messages="$errors->get('role')" class="mt-2" />
-
-                </div>
-
         
 
                 <div class="flex items-center justify-end mt-4">
