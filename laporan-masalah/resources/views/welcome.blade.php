@@ -20,7 +20,7 @@
     <body class="antialiased bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200">
         <main class="flex-grow">
             <!-- hero section -->
-            <section class="relative h-screen flex items-center justify-center text-center bg-gray-900">
+            <section class="relative h-screen flex items-center justify-center text-center bg-gray-900" style="mask-image: linear-gradient(rgba(0, 0, 0, 1) 80%, rgba(0, 0, 0, 0));">
                 <header class="absolute top-0 left-0 w-full p-6 z-20">
                     @if (Route::has('login'))
                         <nav class="flex items-center justify-end gap-2 bg-transparent">

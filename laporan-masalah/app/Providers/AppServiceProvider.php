@@ -24,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('isDPA', function (User $user) {
             return $user->role === 'dpa';
         });
+        
     }
 }
