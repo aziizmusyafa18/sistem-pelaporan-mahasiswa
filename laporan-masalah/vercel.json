@@ -6,6 +6,10 @@
     },
     "builds": [
         {
+            "src": "package.json",
+            "use": "vercel-php@0.7.4"
+        },
+        {
             "src": "api/index.php",
             "use": "vercel-php@0.7.4"
         }
