@@ -9,7 +9,7 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $user = auth()->user();
-    if ($user->role === 'dpa') {
+    if (in_array($user->role, ['dpa', 'admin'])) {
         $laporans = \App\Models\Laporan::with('mahasiswa')->latest()->paginate(10);
     } else {
         $laporans = \App\Models\Laporan::where('mahasiswa_id', $user->mahasiswa_id)->latest()->paginate(10);
@@ -29,7 +29,7 @@ Route::middleware(['auth','\App\Http\Middleware\RoleMiddleware:mahasiswa'])->gro
 });
 
 // Hanya DPA (admin) yang bisa mengelola mahasiswa, dosen, dan melihat semua laporan
-Route::middleware(['auth','\App\Http\Middleware\RoleMiddleware:dpa'])->group(function(){
+Route::middleware(['auth','\App\Http\Middleware\CheckRole:dpa,admin'])->group(function(){
     Route::resource('mahasiswa', \App\Http\Controllers\MahasiswaController::class);
     Route::resource('dosen', \App\Http\Controllers\DosenController::class);
     Route::get('/admin/laporan', [\App\Http\Controllers\LaporanController::class,'index'])->name('admin.laporan.index');

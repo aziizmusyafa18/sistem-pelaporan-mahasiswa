@@ -115,9 +115,28 @@ class MahasiswaController extends Controller
             'nama' => ['required','string','max:100'],
             'nim'  => ['required','string','max:20','unique:mahasiswas,nim,'.$mahasiswa->id],
             'email'=> ['required','email','max:100','unique:mahasiswas,email,'.$mahasiswa->id],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $mahasiswa->update($validated);
+        $mahasiswa->update([
+            'nama' => $validated['nama'],
+            'nim' => $validated['nim'],
+            'email' => $validated['email'],
+        ]);
+
+        // Find the associated user and update their details
+        if ($mahasiswa->user) {
+            $user = $mahasiswa->user;
+            $user->name = $validated['nama'];
+            $user->email = $validated['email'];
+
+            if ($request->filled('password')) {
+                $user->password = Hash::make($validated['password']);
+            }
+
+            $user->save();
+        }
+
 
         return redirect()->route('mahasiswa.index')->with('success','Data mahasiswa berhasil diperbarui.');
     }

@@ -33,36 +33,18 @@ class RegisteredUserController extends Controller
     {
         $rules = [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class, 'regex:/^.+@(mahasiswa\.com|admin\.com)$/'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class, 'regex:/^.+@(dpa\.com|admin\.com)$/'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role' => ['required', 'string', 'in:mahasiswa,dpa'],
+            'nidn' => ['required', 'string', 'max:255', 'unique:dosens'],
         ];
-
-        if ($request->role === 'mahasiswa') {
-            $rules['nim'] = ['required', 'string', 'max:255', 'unique:mahasiswas'];
-        } elseif ($request->role === 'dpa') {
-            $rules['nidn'] = ['required', 'string', 'max:255', 'unique:dosens'];
-        }
 
         $request->validate($rules);
 
-        $mahasiswa_id = null;
         $dosen_id = null;
+        $role = null;
 
-        if ($request->role === 'mahasiswa') {
-            // Generate new ID for mahasiswa
-            $lastMahasiswa = Mahasiswa::orderBy('id', 'desc')->first();
-            $nextIdNumber = $lastMahasiswa ? (int)substr($lastMahasiswa->id, 1) + 1 : 1;
-            $mahasiswaId = 'M' . str_pad($nextIdNumber, 3, '0', STR_PAD_LEFT);
-
-            $mahasiswa = Mahasiswa::create([
-                'id' => $mahasiswaId,
-                'nama' => $request->name,
-                'nim' => $request->nim,
-                'email' => $request->email,
-            ]);
-            $mahasiswa_id = $mahasiswa->id;
-        } elseif ($request->role === 'dpa') {
+        if (str_ends_with($request->email, '@dpa.com') || str_ends_with($request->email, '@admin.com')) {
+            $role = 'dpa';
             // Generate new ID for dosen
             $lastDosen = Dosen::orderBy('id', 'desc')->first();
             $nextIdNumber = $lastDosen ? (int)substr($lastDosen->id, 1) + 1 : 1;
@@ -81,8 +63,7 @@ class RegisteredUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'mahasiswa_id' => $mahasiswa_id,
+            'role' => $role,
             'dosen_id' => $dosen_id,
         ]);
 

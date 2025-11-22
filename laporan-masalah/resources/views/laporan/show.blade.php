@@ -30,7 +30,11 @@
                         <p>{{ $laporan->mahasiswa->nama }} ({{ $laporan->mahasiswa->nim }})</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <a href="{{ route('laporan.index') }}" class="px-4 py-2 rounded border hover:bg-gray-50">Kembali</a>
+                        @can('isDPA')
+                            <a href="{{ route('admin.laporan.index') }}" class="px-4 py-2 rounded border hover:bg-gray-50">Kembali</a>
+                        @else
+                            <a href="{{ route('laporan.index') }}" class="px-4 py-2 rounded border hover:bg-gray-50">Kembali</a>
+                        @endcan
                     </div>
                 </div>
             </div>

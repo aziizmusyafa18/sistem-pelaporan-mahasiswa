@@ -37,6 +37,21 @@
                             <input type="email" name="email" value="{{ old('email', $mahasiswa->email) }}" class="w-full border rounded px-3 py-2" required>
                         </div>
 
+                        {{-- Password --}}
+                        <div class="mb-3">
+                            <label class="block mb-1">Password Baru (opsional)</label>
+                            <input type="password" name="password" class="w-full border rounded px-3 py-2">
+                            @error('password')
+                                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                            @enderror
+                        </div>
+
+                        {{-- Konfirmasi Password --}}
+                        <div class="mb-4">
+                            <label class="block mb-1">Konfirmasi Password Baru</label>
+                            <input type="password" name="password_confirmation" class="w-full border rounded px-3 py-2">
+                        </div>
+
                         <div class="flex items-center gap-2">
                             <button type="submit" class="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700">Update</button>
                             <a href="{{ route('mahasiswa.index') }}" class="px-4 py-2 rounded border hover:bg-gray-50">Batal</a>

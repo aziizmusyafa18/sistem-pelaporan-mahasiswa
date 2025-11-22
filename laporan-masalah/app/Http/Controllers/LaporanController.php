@@ -13,7 +13,7 @@ class LaporanController extends Controller
     public function index(Request $request)
     {
         $user = auth()->user();
-        if ($user->role === 'dpa') {
+        if (in_array($user->role, ['dpa', 'admin'])) {
             // DPA sees all reports, ordered by latest
             $laporans = Laporan::with('mahasiswa')->latest()->paginate(10);
         } else {
@@ -112,8 +112,8 @@ class LaporanController extends Controller
     {
         $user = auth()->user();
 
-        // DPA can delete any report
-        if ($user->role === 'dpa') {
+        // DPA or admin can delete any report
+        if (in_array($user->role, ['dpa', 'admin'])) {
             $laporan->delete();
             return redirect()->route('admin.laporan.index')->with('success','Laporan berhasil dihapus.');
         }

@@ -26,7 +26,7 @@ class AppServiceProvider extends ServiceProvider
         }
 
         Gate::define('isDPA', function (User $user) {
-            return $user->role === 'dpa';
+            return in_array($user->role, ['dpa', 'admin']);
         });
         
     }
