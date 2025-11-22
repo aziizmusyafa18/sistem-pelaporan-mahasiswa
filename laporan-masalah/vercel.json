@@ -6,7 +6,7 @@
     },
     "routes": [
         { "src": "/build/(.*)", "dest": "public/build/$1" },
-        { "src": "/img/hero1.jpg", "dest": "public/img/hero1.jpg" },
+        { "src": "/img/(.*)", "dest": "public/img/$1" },
         { "src": "/favicon.ico", "dest": "public/favicon.ico" },
         { "src": "/robots.txt", "dest": "public/robots.txt" },
         { "src": "/(.*)", "dest": "/api/index.php" }
