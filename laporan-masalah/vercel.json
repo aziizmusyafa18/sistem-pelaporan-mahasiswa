@@ -11,6 +11,6 @@
         { "src": "/robots.txt", "dest": "public/robots.txt" },
         { "src": "/(.*)", "dest": "/api/index.php" }
     ],
-    "buildCommand": "npm run build",
+    "buildCommand": "npm run vercel-build",
     "outputDirectory": "public"
 }
