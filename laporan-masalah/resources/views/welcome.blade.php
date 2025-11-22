@@ -51,7 +51,7 @@
                         </nav>
                     @endif
                 </header>
-                <img src="{{ asset('img/hero1.jpg') }}" alt="Background" class="absolute inset-0 w-full h-full object-cover">
+                <img src="{{ asset('img/bghero.png') }}" alt="Background" class="absolute inset-0 w-full h-full object-cover">
                 <div class="absolute inset-0 bg-black opacity-50"></div>
                 <div class="relative z-10 px-4">
                     <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-5xl xl:text-6xl text-white gsap-animate-heading">Sistem Pelaporan Masalah Mahasiswa</h1>
