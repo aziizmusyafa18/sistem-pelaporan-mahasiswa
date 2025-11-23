@@ -5,7 +5,6 @@
     "buildCommand": "npm install && npm run build"
   },
   "deploy": {
-    "releaseCommand": "php artisan migrate --force",
-    "startCommand": "vendor/bin/heroku-php-apache2 public/"
+    "releaseCommand": "php artisan migrate --force"
   }
 }
