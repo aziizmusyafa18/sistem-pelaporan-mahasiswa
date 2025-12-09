@@ -81,6 +81,7 @@ class MahasiswaController extends Controller
             'nama' => $validated['nama'],
             'nim' => $validated['nim'],
             'email' => $email,
+            'password' => $validated['password'],
             'user_id' => $user->id,
         ]);
 
@@ -118,11 +119,17 @@ class MahasiswaController extends Controller
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
         ]);
 
-        $mahasiswa->update([
+        $updateData = [
             'nama' => $validated['nama'],
             'nim' => $validated['nim'],
             'email' => $validated['email'],
-        ]);
+        ];
+
+        if ($request->filled('password')) {
+            $updateData['password'] = $validated['password'];
+        }
+
+        $mahasiswa->update($updateData);
 
         // Find the associated user and update their details
         if ($mahasiswa->user) {

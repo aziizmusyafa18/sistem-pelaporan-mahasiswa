@@ -45,12 +45,19 @@
                                   </td>
                                   <td class="hidden md:table-cell px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm text-gray-900">{{ optional($laporan->mahasiswa)->nama }}</td>
                                   <td class="whitespace-nowrap px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm">
-                                    @php
-                                      $color = $laporan->status === 'selesai' ? 'green' : ($laporan->status === 'diproses' ? 'yellow' : 'red');
-                                    @endphp
-                                    <span class="inline-flex rounded-full px-2 py-0.5 sm:py-1 text-xs font-semibold leading-5 bg-{{ $color }}-100 text-{{ $color }}-800">
-                                      {{ ucfirst($laporan->status) }}
-                                    </span>
+                                    @if($laporan->status === 'selesai')
+                                      <span class="inline-flex rounded-full px-2 py-0.5 sm:py-1 text-xs font-semibold leading-5 bg-green-100 text-green-800">
+                                        Selesai
+                                      </span>
+                                    @elseif($laporan->status === 'diproses')
+                                      <span class="inline-flex rounded-full px-2 py-0.5 sm:py-1 text-xs font-semibold leading-5 bg-yellow-100 text-yellow-800">
+                                        Diproses
+                                      </span>
+                                    @else
+                                      <span class="inline-flex rounded-full px-2 py-0.5 sm:py-1 text-xs font-semibold leading-5 bg-red-100 text-red-800">
+                                        Baru
+                                      </span>
+                                    @endif
                                   </td>
                                   <td class="hidden lg:table-cell whitespace-nowrap px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm text-gray-500">
                                     {{ $laporan->tanggal_update_status_terakhir ? \Carbon\Carbon::parse($laporan->tanggal_update_status_terakhir)->isoFormat('D MMM YYYY') : '-' }}
@@ -59,24 +66,35 @@
                                     <div class="flex items-center justify-center gap-1 sm:gap-2">
                                       @can('isDPA')
                                         <a href="{{ route('admin.laporan.show', $laporan) }}" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 border border-blue-500 text-blue-600 rounded text-xs hover:bg-blue-50" title="Lihat">
-                                          <i class="bi bi-eye"></i>
+                                          <i class="fas fa-eye"></i>
                                         </a>
                                       @else
                                         <a href="{{ route('laporan.show', $laporan) }}" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 border border-blue-500 text-blue-600 rounded text-xs hover:bg-blue-50" title="Lihat">
-                                          <i class="bi bi-eye"></i>
+                                          <i class="fas fa-eye"></i>
                                         </a>
                                       @endcan
 
                                       @can('isDPA')
                                         @if($laporan->status !== 'selesai')
-                                          <form action="{{ route('admin.laporan.updateStatus', $laporan) }}" method="POST" class="inline-block">
-                                            @csrf
-                                            @method('PATCH')
-                                            <input type="hidden" name="status" value="{{ $laporan->status === 'baru' ? 'diproses' : 'selesai' }}">
-                                            <button type="submit" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 border border-green-500 text-green-600 rounded text-xs hover:bg-green-50" title="{{ $laporan->status === 'baru' ? 'Proses' : 'Selesai' }}">
-                                              <i class="bi bi-{{ $laporan->status === 'baru' ? 'arrow-repeat' : 'check-lg' }}"></i>
-                                            </button>
-                                          </form>
+                                          @if($laporan->status === 'baru')
+                                            <form action="{{ route('admin.laporan.updateStatus', $laporan) }}" method="POST" class="inline-block">
+                                              @csrf
+                                              @method('PATCH')
+                                              <input type="hidden" name="status" value="diproses">
+                                              <button type="submit" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 border border-green-500 text-green-600 rounded text-xs hover:bg-green-50" title="Proses">
+                                                <i class="fas fa-sync-alt"></i>
+                                              </button>
+                                            </form>
+                                          @else
+                                            <form action="{{ route('admin.laporan.updateStatus', $laporan) }}" method="POST" class="inline-block">
+                                              @csrf
+                                              @method('PATCH')
+                                              <input type="hidden" name="status" value="selesai">
+                                              <button type="submit" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 border border-green-500 text-green-600 rounded text-xs hover:bg-green-50" title="Selesai">
+                                                <i class="fas fa-check"></i>
+                                              </button>
+                                            </form>
+                                          @endif
                                         @endif
                                       @endcan
 
@@ -84,7 +102,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 border border-red-500 text-red-600 rounded text-xs hover:bg-red-50" title="Hapus">
-                                          <i class="bi bi-trash"></i>
+                                          <i class="fas fa-trash"></i>
                                         </button>
                                       </form>
                                     </div>

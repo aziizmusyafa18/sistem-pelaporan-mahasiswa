@@ -13,7 +13,7 @@
                     <div class="flex items-center justify-between mb-4">
                         {{-- <h2 class="text-xl font-semibold">Daftar Mahasiswa</h2> --}}
                         <a href="{{ route('mahasiswa.create') }}" class="px-3 py-1.5 sm:px-4 sm:py-2 rounded bg-blue-600 text-white hover:bg-blue-700 text-sm sm:text-base whitespace-nowrap">
-                          <i class="bi bi-plus-lg"></i>
+                          <i class="fas fa-plus"></i>
                           <span class="hidden sm:inline">Tambah Mahasiswa</span>
                           <span class="sm:hidden">Tambah</span>
                         </a>
@@ -54,15 +54,15 @@
                                   <td class="whitespace-nowrap px-2 sm:px-3 lg:px-4 py-2 sm:py-3 text-xs sm:text-sm">
                                     <div class="flex items-center justify-center gap-1 sm:gap-2">
                                       <a href="{{ route('mahasiswa.show', $mahasiswa) }}" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 text-blue-700 hover:text-blue-900" title="Lihat">
-                                        <i class="bi bi-eye"></i>
+                                        <i class="fas fa-eye"></i>
                                       </a>
                                       <a href="{{ route('mahasiswa.edit', $mahasiswa) }}" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 text-yellow-600 hover:text-yellow-800" title="Edit">
-                                        <i class="bi bi-pencil-square"></i>
+                                        <i class="fas fa-edit"></i>
                                       </a>
                                       <form action="{{ route('mahasiswa.destroy', $mahasiswa) }}" method="POST" class="inline-block" onsubmit="return confirm('Yakin hapus data?')">
                                         @csrf @method('DELETE')
                                         <button type="submit" class="inline-flex items-center justify-center p-1 sm:px-2 sm:py-1 text-red-600 hover:text-red-800" title="Hapus">
-                                          <i class="bi bi-trash"></i>
+                                          <i class="fas fa-trash"></i>
                                         </button>
                                       </form>
                                     </div>
