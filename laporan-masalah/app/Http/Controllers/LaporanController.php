@@ -105,6 +105,14 @@ class LaporanController extends Controller
             'status' => $validated['status'],
         ]);
 
+        // If status is selesai, store notification in session for mahasiswa
+        if ($validated['status'] === 'selesai') {
+            session()->flash('laporan_selesai', [
+                'nomor_laporan' => $laporan->nomor_laporan,
+                'mahasiswa_id' => $laporan->mahasiswa_id
+            ]);
+        }
+
         return redirect()->back()->with('success','Laporan berhasil diselesaikan.');
     }
 

@@ -43,11 +43,11 @@
                     </button>
                     <div x-show="open" x-transition class="mt-1 lg:mt-2 ml-3 lg:ml-4 space-y-1 lg:space-y-2">
                         <a href="{{ route('dosen.index') }}" class="flex items-center px-3 lg:px-4 py-2 text-sm lg:text-base text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 {{ request()->routeIs('dosen.index') ? 'bg-blue-50 text-blue-600' : '' }}">
-                            <i class="bi bi-person-badge text-base lg:text-lg mr-2 lg:mr-3"></i>
+                            <i class="fa-solid fa-user-tie text-base lg:text-lg mr-2 lg:mr-3"></i>
                             <span>{{ __('Dosen') }}</span>
                         </a>
                         <a href="{{ route('mahasiswa.index') }}" class="flex items-center px-3 lg:px-4 py-2 text-sm lg:text-base text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors duration-200 {{ request()->routeIs('mahasiswa.index') ? 'bg-blue-50 text-blue-600' : '' }}">
-                            <i class="bi bi-people text-base lg:text-lg mr-2 lg:mr-3"></i>
+                            <i class="fa-solid fa-user-graduate text-base lg:text-lg mr-2 lg:mr-3"></i>
                             <span>{{ __('Mahasiswa') }}</span>
                         </a>
                     </div>
@@ -166,11 +166,11 @@
                 </button>
                 <div x-show="open" x-transition class="mt-1 ml-3 sm:ml-4 space-y-1">
                     <a href="{{ route('dosen.index') }}" class="flex items-center px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors {{ request()->routeIs('dosen.index') ? 'bg-blue-50 text-blue-600' : '' }}">
-                        <i class="bi bi-person-badge text-base sm:text-lg mr-2.5 sm:mr-3"></i>
+                        <i class="fa-solid fa-user-tie text-base sm:text-lg mr-2.5 sm:mr-3"></i>
                         <span>{{ __('Dosen') }}</span>
                     </a>
                     <a href="{{ route('mahasiswa.index') }}" class="flex items-center px-3 sm:px-4 py-2 sm:py-2.5 text-sm sm:text-base text-gray-600 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors {{ request()->routeIs('mahasiswa.index') ? 'bg-blue-50 text-blue-600' : '' }}">
-                        <i class="bi bi-people text-base sm:text-lg mr-2.5 sm:mr-3"></i>
+                        <i class="fa-solid fa-user-graduate text-base sm:text-lg mr-2.5 sm:mr-3"></i>
                         <span>{{ __('Mahasiswa') }}</span>
                     </a>
                 </div>

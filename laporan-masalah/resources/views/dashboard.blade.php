@@ -11,14 +11,12 @@
                 <div class="p-4 sm:p-6 text-gray-900">
                     @if(auth()->user()->role === 'mahasiswa')
                       <p class="mb-3 text-sm sm:text-base">Selamat datang, <span class="font-semibold">{{ auth()->user()->name }}</span>. Berikut laporan yang kamu buat:</p>
-                      @foreach ($laporans as $laporan)
-                        @if ($laporan->status === 'selesai')
-                          <div class="bg-green-100 border border-green-400 text-green-700 px-3 sm:px-4 py-2 sm:py-3 rounded relative mb-3 sm:mb-4 text-sm sm:text-base" role="alert">
-                            <strong class="font-bold">Laporan Selesai!</strong>
-                            <span class="block sm:inline">Laporan Anda dengan nomor tiket <span class="font-mono">{{ $laporan->nomor_laporan }}</span> telah diselesaikan oleh admin.</span>
-                          </div>
-                        @endif
-                      @endforeach
+                      @if(session('laporan_selesai') && session('laporan_selesai')['mahasiswa_id'] === auth()->user()->mahasiswa_id)
+                        <div class="bg-green-100 border border-green-400 text-green-700 px-3 sm:px-4 py-2 sm:py-3 rounded relative mb-3 sm:mb-4 text-sm sm:text-base" role="alert">
+                          <strong class="font-bold">Laporan Selesai!</strong>
+                          <span class="block sm:inline">Laporan Anda dengan nomor tiket <span class="font-mono">{{ session('laporan_selesai')['nomor_laporan'] }}</span> telah diselesaikan oleh admin.</span>
+                        </div>
+                      @endif
                     @else
                       <p class="mb-3 text-sm sm:text-base">Selamat datang <span class="font-semibold">Admin DPA</span>, berikut semua laporan mahasiswa:</p>
                     @endif
